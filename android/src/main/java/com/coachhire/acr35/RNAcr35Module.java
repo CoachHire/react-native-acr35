@@ -6,6 +6,9 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.WritableMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +22,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
+import android.media.AudioDeviceInfo;
+import android.util.Log;
+import android.support.annotation.Nullable;
+
+import android.support.v4.app.ActivityCompat;
+import android.Manifest;
+import android.content.pm.PackageManager;
 
 import java.lang.Override;
 import java.lang.Runnable;
@@ -27,17 +37,21 @@ import java.lang.Thread;
 import java.util.Locale;
 
 public class RNAcr35Module extends ReactContextBaseJavaModule {
+    private static final String TAG = "RNAcr35";
 
     private final ReactApplicationContext reactContext;
+    private Transmitter transmitter;
+    private AudioManager mAudioManager;
+    private AudioJackReader mReader;
+    private Arguments arguments;
 
     public RNAcr35Module(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
+        this.mAudioManager = (AudioManager) this.reactContext.getSystemService(Context.AUDIO_SERVICE);
+        this.mReader = new AudioJackReader(mAudioManager);
     }
 
-    private Transmitter transmitter;
-    private AudioManager mAudioManager;
-    private AudioJackReader mReader;
 
     private boolean firstRun = true;
     /**
@@ -58,6 +72,17 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
     public String getName() {
         return "RNAcr35";
     }
+
+    private void checkRecordPermission() {
+
+        if (ActivityCompat.checkSelfPermission(reactContext, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this.getCurrentActivity(), new String[]{Manifest.permission.RECORD_AUDIO},
+                    123);
+        }
+    }
+
 
     /**
      * Converts raw data into a hexidecimal string
@@ -80,6 +105,21 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
     }
 
     /**
+     * Check for plugged in audio device
+     */
+    private boolean hasWiredHeadset() {
+        final AudioDeviceInfo[] devices = mAudioManager.getDevices(AudioManager.GET_DEVICES_ALL);
+        for (AudioDeviceInfo device : devices) {
+            final int type = device.getType();
+            if (type == AudioDeviceInfo.TYPE_WIRED_HEADSET) {
+                Log.d(TAG, "hasWiredHeadset: found wired headset");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Checks if the device media volume is set to 100%
      *
      * @return true if media volume is at 100%
@@ -95,6 +135,31 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
         }
     }
 
+    private void sendEvent(String eventName, @Nullable WritableMap params) {
+      try {
+        this.reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+          .emit(eventName, params);
+      } catch (RuntimeException e) {
+        Log.e("ERROR", "java.lang.RuntimeException: Failed to send event");
+      }
+    }
+
+    /**
+     * Stop listener
+     *
+     * @param promise: the promise to resolve to the bridge
+     */
+    @ReactMethod
+    private void sleep(final Promise promise) {
+        Log.d(TAG, "Sleeping...");
+        /* Kill the polling thread */
+        if (transmitter != null) {
+            transmitter.kill();
+        }
+        /* Send a success message back to app */
+        promise.resolve("Slept");
+    }
+
     /**
      * Sets the ACR35 reader to continuously poll for the presence of a card. If a card is found,
      * the UID will be returned
@@ -105,11 +170,12 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
     @ReactMethod
     private void read(final int cardType, final Promise promise) {
         try {
-            System.out.println("setting up for reading...");
+            Log.d(TAG, "Setting up for reading...");
             firstReset = true;
+            checkRecordPermission();
 
             /* If no device is plugged into the audio socket or the media volume is < 100% */
-            if (!mAudioManager.isWiredHeadsetOn()) {
+            if (!hasWiredHeadset()) {
                 /* Communicate to the application that the reader is unplugged */
                 promise.reject("Device is unplugged");
             } else if (!maxVolume()) {
@@ -121,13 +187,22 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
             mReader.setOnPiccResponseApduAvailableListener
                     (new AudioJackReader.OnPiccResponseApduAvailableListener() {
                         @Override
-                        public void onPiccResponseApduAvailable(AudioJackReader reader,byte[] responseApdu) {
+                        public void onPiccResponseApduAvailable(AudioJackReader reader, byte[] responseApdu) {
                             /* Update the connection status of the transmitter */
                             transmitter.updateStatus(true);
-                            /* Send the card UID to the application */
-                            promise.resolve(bytesToHex(responseApdu));
+                            String id = bytesToHex(responseApdu);
+                            // Dont resolve if no card found
+                            if( id.equals("63 00") || id.equals("63 00 ")){
+                              return;
+                            } else {
+                              // Create object to send in event
+                              WritableMap map = arguments.createMap();
+                              map.putString("cardId", id);
+                              /* Send the card UID to the application */
+                              sendEvent("NfcId", map);
+                            }
                             /* Print out the UID */
-                            System.out.println(bytesToHex(responseApdu));
+                            Log.d(TAG, "Found Card: " + id);
                         }
                     });
 
@@ -135,10 +210,10 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
             mReader.setOnResetCompleteListener(new AudioJackReader.OnResetCompleteListener() {
                 @Override
                 public void onResetComplete(AudioJackReader reader) {
-                    System.out.println("reset complete");
+                    Log.d(TAG, "Reset complete");
 
-                /* If this is the first reset, the ACR35 reader must be turned off and back on again
-                   to work reliably... */
+                    /* If this is the first reset, the ACR35 reader must be turned off and back on again
+                      to work reliably... */
                     if (firstReset) {
                         new Thread(new Runnable() {
                             public void run() {
@@ -159,8 +234,7 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
                         }).start();
                     } else {
                         /* Create a new transmitter for the UID read command */
-                        transmitter = new Transmitter(mReader, mAudioManager, timeout,
-                                apdu, cardType, promise);
+                        transmitter = new Transmitter(mReader, mAudioManager, timeout, apdu, cardType, promise);
                         /* has its own thread management system */
                         new Thread(transmitter).start();
                     }
@@ -169,7 +243,8 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
 
             mReader.start();
             mReader.reset();
-            System.out.println("setup complete");
+            Log.d(TAG, "Setup complete");
+            promise.resolve("Listening for cards");
         } catch (Exception ex) {
             promise.reject("ERR_UNEXPECTED_EXCEPTION", ex);
         }

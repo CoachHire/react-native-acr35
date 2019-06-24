@@ -1,8 +1,7 @@
-
 {
   "name": "react-native-acr35",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Library to interface with external acr35 nfc reader",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +9,8 @@
   "keywords": [
     "react-native"
   ],
-  "author": "",
-  "license": "",
+  "author": "Charles Killer @Foosballfan",
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2"
   }

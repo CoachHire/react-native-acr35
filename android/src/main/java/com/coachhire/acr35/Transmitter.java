@@ -2,12 +2,14 @@ package com.coachhire.acr35;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.AudioDeviceInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.acs.audiojack.AesTrackData;
 import com.acs.audiojack.AudioJackReader;
@@ -23,7 +25,7 @@ import java.lang.Thread;
  * <code>setOnPiccResponseApduAvailableListener</code> callback function
  */
 public class Transmitter implements Runnable {
-
+    private static final String TAG = "RNAcr35Transmitter";
     private AudioJackReader mReader;
     private AudioManager mAudioManager;
     private Promise promise;
@@ -49,10 +51,10 @@ public class Transmitter implements Runnable {
     /**
      * @param mReader:       AudioJack reader service
      * @param mAudioManager: system audio service
-     * @param promise:       context for plugin results
      * @param timeout:       time in <b>seconds</b> to wait for commands to complete
      * @param apdu:          byte array containing the command to be sent
      * @param cardType:      the integer representing card type
+     * @param promise:       context for plugin results
      */
     public Transmitter(AudioJackReader mReader, AudioManager mAudioManager, int timeout, byte[] apdu, int cardType, Promise promise) {
         this.mReader = mReader;
@@ -77,6 +79,20 @@ public class Transmitter implements Runnable {
         } else {
             return true;
         }
+    }
+
+    /**
+     * Check for plugged in audio device
+     */
+    private boolean hasWiredHeadset() {
+        final AudioDeviceInfo[] devices = mAudioManager.getDevices(AudioManager.GET_DEVICES_ALL);
+        for (AudioDeviceInfo device : devices) {
+            final int type = device.getType();
+            if (type == AudioDeviceInfo.TYPE_WIRED_HEADSET) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -121,7 +137,7 @@ public class Transmitter implements Runnable {
                     promise.reject("disconnected");
                     /* Kill this thread */
                     kill();
-                } else if (!mAudioManager.isWiredHeadsetOn()) {
+                } else if (!hasWiredHeadset()) {
                     /* Communicate to the application that the reader is unplugged */
                     promise.reject("unplugged");
                     /* Kill this thread */
@@ -132,7 +148,7 @@ public class Transmitter implements Runnable {
                     /* Kill this thread */
                     kill();
                 } else {
-                    System.out.println("reading...");
+                    Log.d(TAG, "Reading...");
                     /* Power on the PICC */
                     mReader.piccPowerOn(timeout, cardType);
                     /* Transmit the APDU */
