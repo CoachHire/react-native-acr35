@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		501D68D622C11B2500216C2F /* libAudioJack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D68D522C11B2500216C2F /* libAudioJack.a */; };
 		B3E7B58A1CC2AC0600A0062D /* RNAcr35.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNAcr35.m */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,19 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNAcr35.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNAcr35.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		501D68BA22C0FA1800216C2F /* AudioJack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioJack.h; path = libs/AudioJack.h; sourceTree = "<group>"; };
+		501D68BF22C11A1900216C2F /* ACRAudioJackReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRAudioJackReader.h; path = libs/ACRAudioJackReader.h; sourceTree = "<group>"; };
+		501D68C022C11A1900216C2F /* ACRTrack2Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRTrack2Data.h; path = libs/ACRTrack2Data.h; sourceTree = "<group>"; };
+		501D68C122C11A1900216C2F /* ACRCRC16.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRCRC16.h; path = libs/ACRCRC16.h; sourceTree = "<group>"; };
+		501D68C222C11A1900216C2F /* ACRResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRResult.h; path = libs/ACRResult.h; sourceTree = "<group>"; };
+		501D68C322C11A1900216C2F /* ACRDukptTrackData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRDukptTrackData.h; path = libs/ACRDukptTrackData.h; sourceTree = "<group>"; };
+		501D68C422C11A1900216C2F /* ACRStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRStatus.h; path = libs/ACRStatus.h; sourceTree = "<group>"; };
+		501D68C522C11A1900216C2F /* ACRTrackData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRTrackData.h; path = libs/ACRTrackData.h; sourceTree = "<group>"; };
+		501D68C622C11A1900216C2F /* ACRAesTrackData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRAesTrackData.h; path = libs/ACRAesTrackData.h; sourceTree = "<group>"; };
+		501D68C722C11A1900216C2F /* AudioJackErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioJackErrors.h; path = libs/AudioJackErrors.h; sourceTree = "<group>"; };
+		501D68C822C11A1900216C2F /* ACRTrack1Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRTrack1Data.h; path = libs/ACRTrack1Data.h; sourceTree = "<group>"; };
+		501D68C922C11A1900216C2F /* ACRDukptReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRDukptReceiver.h; path = libs/ACRDukptReceiver.h; sourceTree = "<group>"; };
+		501D68D522C11B2500216C2F /* libAudioJack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAudioJack.a; path = libs/libAudioJack.a; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNAcr35.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNAcr35.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNAcr35.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNAcr35.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -33,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				501D68D622C11B2500216C2F /* libAudioJack.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,12 +62,33 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		501D68B922C0FA1800216C2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				501D68D522C11B2500216C2F /* libAudioJack.a */,
+				501D68C622C11A1900216C2F /* ACRAesTrackData.h */,
+				501D68BF22C11A1900216C2F /* ACRAudioJackReader.h */,
+				501D68C122C11A1900216C2F /* ACRCRC16.h */,
+				501D68C922C11A1900216C2F /* ACRDukptReceiver.h */,
+				501D68C322C11A1900216C2F /* ACRDukptTrackData.h */,
+				501D68C222C11A1900216C2F /* ACRResult.h */,
+				501D68C422C11A1900216C2F /* ACRStatus.h */,
+				501D68C822C11A1900216C2F /* ACRTrack1Data.h */,
+				501D68C022C11A1900216C2F /* ACRTrack2Data.h */,
+				501D68C522C11A1900216C2F /* ACRTrackData.h */,
+				501D68C722C11A1900216C2F /* AudioJackErrors.h */,
+				501D68BA22C0FA1800216C2F /* AudioJack.h */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
 				B3E7B5881CC2AC0600A0062D /* RNAcr35.h */,
 				B3E7B5891CC2AC0600A0062D /* RNAcr35.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				501D68B922C0FA1800216C2F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,6 +131,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
@@ -204,12 +241,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-				"$(inherited)",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/libs/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNAcr35;
 				SKIP_INSTALL = YES;
@@ -224,8 +265,12 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
+					"$(SRCROOT)/libs/**",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNAcr35;
 				SKIP_INSTALL = YES;
