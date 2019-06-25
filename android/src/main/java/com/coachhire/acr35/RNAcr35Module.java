@@ -236,7 +236,7 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
                         }).start();
                     } else {
                         /* Create a new transmitter for the UID read command */
-                        transmitter = new Transmitter(mReader, mAudioManager, timeout, apdu, cardType, promise);
+                        transmitter = new Transmitter(mReader, mAudioManager, timeout, apdu, cardType);
                         /* has its own thread management system */
                         new Thread(transmitter).start();
                     }

@@ -14,7 +14,6 @@ import com.acs.audiojack.AudioJackReader;
 import com.acs.audiojack.DukptTrackData;
 import com.acs.audiojack.Result;
 import com.acs.audiojack.TrackData;
-import com.facebook.react.bridge.Promise;
 
 import java.lang.Thread;
 
@@ -26,7 +25,6 @@ public class Transmitter implements Runnable {
     private static final String TAG = "RNAcr35Transmitter";
     private AudioJackReader mReader;
     private AudioManager mAudioManager;
-    private Promise promise;
 
     private boolean killMe = false;
     /**
@@ -52,12 +50,10 @@ public class Transmitter implements Runnable {
      * @param timeout:       time in <b>seconds</b> to wait for commands to complete
      * @param apdu:          byte array containing the command to be sent
      * @param cardType:      the integer representing card type
-     * @param promise:       context for plugin results
      */
-    public Transmitter(AudioJackReader mReader, AudioManager mAudioManager, int timeout, byte[] apdu, int cardType, Promise promise) {
+    public Transmitter(AudioJackReader mReader, AudioManager mAudioManager, int timeout, byte[] apdu, int cardType) {
         this.mReader = mReader;
         this.mAudioManager = mAudioManager;
-        this.promise = promise;
         this.timeout = timeout;
         this.apdu = apdu;
         this.cardType = cardType;
@@ -132,17 +128,20 @@ public class Transmitter implements Runnable {
                  * plugged in, or the device media volume is below 100% */
                 if (itersWithoutResponse == 4) {
                     /* Communicate to the application that the reader is disconnected */
-                    promise.reject("disconnected");
+                    // TODO - this needs to be an event since you cant call a promise twice
+                    // promise.reject("disconnected");
                     /* Kill this thread */
                     kill();
                 } else if (!hasWiredHeadset()) {
                     /* Communicate to the application that the reader is unplugged */
-                    promise.reject("unplugged");
+                    // TODO - this needs to be an event since you cant call a promise twice
+                    // promise.reject("unplugged");
                     /* Kill this thread */
                     kill();
                 } else if (!maxVolume()) {
                     /* Communicate to the application that the media volume is low */
-                    promise.reject("low_volume");
+                    // TODO - this needs to be an event since you cant call a promise twice
+                    // promise.reject("low_volume");
                     /* Kill this thread */
                     kill();
                 } else {
