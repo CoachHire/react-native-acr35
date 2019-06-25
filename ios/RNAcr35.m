@@ -1,5 +1,6 @@
 
 #import "RNAcr35.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation RNAcr35
 
@@ -69,13 +70,34 @@ RCT_EXPORT_METHOD(sleep:(RCTPromiseResolveBlock)resolve
         resolve(@"asleep");
     }
     @catch (NSException *exception) {
-        NSString* errorMessage = [NSString stringWithFormat:@"{\"message\":\"key does not present\",\"actual-error\":%@}", exception];
+        NSString* errorMessage = [NSString stringWithFormat:@"{\"message\":\"Failed to sleep\",\"actual-error\":%@}", exception];
         reject(@"-1", errorMessage, nil);
     }
 }
 
+- (BOOL)isHeadsetPluggedIn {
+    AVAudioSessionRouteDescription* route = [[AVAudioSession sharedInstance] currentRoute];
+    for (AVAudioSessionPortDescription* desc in [route outputs]) {
+        if ([[desc portType] isEqualToString:AVAudioSessionPortHeadphones])
+            return YES;
+    }
+    return NO;
+}
+
 RCT_EXPORT_METHOD(read: (NSString *)type resolve:(RCTPromiseResolveBlock) resolve
                   rejecter:(RCTPromiseRejectBlock) reject) {
+    
+    bool *headsetPluggedIn = [self isHeadsetPluggedIn];
+    if(!headsetPluggedIn){
+        NSString* errorMessage = [NSString stringWithFormat:@"No reader connected"];
+        return reject(@"1", errorMessage, nil);
+    }
+    
+    float vol = [[AVAudioSession sharedInstance] outputVolume];
+    if(vol < 1){
+        NSString* errorMessage = [NSString stringWithFormat:@"Volume must set to maximum"];
+        return reject(@"2", errorMessage, nil);
+    }
     
     /* Class variables require initialisation on first launch */
     if(firstRun){
