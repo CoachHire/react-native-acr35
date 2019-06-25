@@ -177,10 +177,12 @@ public class RNAcr35Module extends ReactContextBaseJavaModule {
             /* If no device is plugged into the audio socket or the media volume is < 100% */
             if (!hasWiredHeadset()) {
                 /* Communicate to the application that the reader is unplugged */
-                promise.reject("Device is unplugged");
+                promise.reject("1", "No reader connected}");
+                return;
             } else if (!maxVolume()) {
                 /* Communicate to the application that the media volume is low */
-                promise.reject("Volume is too low");
+                promise.reject("2", "Volume must set to maximum");
+                return;
             }
 
             /* Set the PICC response APDU callback */
