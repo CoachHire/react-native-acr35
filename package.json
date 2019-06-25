@@ -9,6 +9,7 @@
   "keywords": [
     "react-native"
   ],
+  "types": "index.d.ts",
   "author": "Charles Killer @Foosballfan",
   "license": "MIT",
   "peerDependencies": {
