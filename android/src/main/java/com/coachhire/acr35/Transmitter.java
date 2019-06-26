@@ -113,46 +113,13 @@ public class Transmitter implements Runnable {
             Thread.sleep(1000);
 
             while (!killMe) {
-                /* If the reader is not connected, increment no. of iterations without response */
-                if (!readerConnected) {
-                    itersWithoutResponse++;
-                }
-                /* Else, reset the number of iterations without a response */
-                else {
-                    itersWithoutResponse = 0;
-                }
-                /* Reset the connection state */
-                readerConnected = false;
-
-                /* If we have waited 3 seconds without a response, or the audio jack is not
-                 * plugged in, or the device media volume is below 100% */
-                if (itersWithoutResponse == 4) {
-                    /* Communicate to the application that the reader is disconnected */
-                    // TODO - this needs to be an event since you cant call a promise twice
-                    // promise.reject("disconnected");
-                    /* Kill this thread */
-                    kill();
-                } else if (!hasWiredHeadset()) {
-                    /* Communicate to the application that the reader is unplugged */
-                    // TODO - this needs to be an event since you cant call a promise twice
-                    // promise.reject("unplugged");
-                    /* Kill this thread */
-                    kill();
-                } else if (!maxVolume()) {
-                    /* Communicate to the application that the media volume is low */
-                    // TODO - this needs to be an event since you cant call a promise twice
-                    // promise.reject("low_volume");
-                    /* Kill this thread */
-                    kill();
-                } else {
-                    Log.d(TAG, "Reading...");
-                    /* Power on the PICC */
-                    mReader.piccPowerOn(timeout, cardType);
-                    /* Transmit the APDU */
-                    mReader.piccTransmit(timeout, apdu);
-                    /* Repeat every second */
-                    Thread.sleep(1000);
-                }
+              Log.d(TAG, "Reading...");
+              /* Power on the PICC */
+              mReader.piccPowerOn(timeout, cardType);
+              /* Transmit the APDU */
+              mReader.piccTransmit(timeout, apdu);
+              /* Repeat every second */
+              Thread.sleep(1000);
             }
             /* Power off the PICC */
             mReader.piccPowerOff();
