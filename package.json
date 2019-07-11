@@ -1,6 +1,6 @@
 {
   "name": "react-native-acr35",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Library to interface with external acr35 nfc reader",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,9 @@
   "types": "index.d.ts",
   "author": "Charles Killer @Foosballfan",
   "license": "MIT",
+  "devDependencies": {
+    "react-native": "0.41.2"
+  },
   "peerDependencies": {
     "react-native": "^0.41.2"
   }

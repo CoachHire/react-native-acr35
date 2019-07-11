@@ -8,8 +8,68 @@
 
 /* Begin PBXBuildFile section */
 		501D68D622C11B2500216C2F /* libAudioJack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D68D522C11B2500216C2F /* libAudioJack.a */; };
+		503489A122D7941B009F3C68 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5034899222D793E7009F3C68 /* libReact.a */; };
 		B3E7B58A1CC2AC0600A0062D /* RNAcr35.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNAcr35.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5034899122D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
+			remoteInfo = React;
+		};
+		5034899322D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28131D9B038B00D4039D;
+			remoteInfo = "React-tvOS";
+		};
+		5034899522D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3C059A1DE3340900C268FA;
+			remoteInfo = yoga;
+		};
+		5034899722D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3C06751DE3340C00C268FA;
+			remoteInfo = "yoga-tvOS";
+		};
+		5034899922D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3CD9251DE5FBEC00167DC4;
+			remoteInfo = cxxreact;
+		};
+		5034899B22D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
+			remoteInfo = "cxxreact-tvOS";
+		};
+		5034899D22D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3CD90B1DE5FBD600167DC4;
+			remoteInfo = jschelpers;
+		};
+		5034899F22D793E7009F3C68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
+			remoteInfo = "jschelpers-tvOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
@@ -38,6 +98,7 @@
 		501D68C822C11A1900216C2F /* ACRTrack1Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRTrack1Data.h; path = libs/ACRTrack1Data.h; sourceTree = "<group>"; };
 		501D68C922C11A1900216C2F /* ACRDukptReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ACRDukptReceiver.h; path = libs/ACRDukptReceiver.h; sourceTree = "<group>"; };
 		501D68D522C11B2500216C2F /* libAudioJack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAudioJack.a; path = libs/libAudioJack.a; sourceTree = "<group>"; };
+		5034898622D793E7009F3C68 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNAcr35.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNAcr35.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNAcr35.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNAcr35.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				503489A122D7941B009F3C68 /* libReact.a in Frameworks */,
 				501D68D622C11B2500216C2F /* libAudioJack.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,6 +127,7 @@
 		501D68B922C0FA1800216C2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5034898622D793E7009F3C68 /* React.xcodeproj */,
 				501D68D522C11B2500216C2F /* libAudioJack.a */,
 				501D68C622C11A1900216C2F /* ACRAesTrackData.h */,
 				501D68BF22C11A1900216C2F /* ACRAudioJackReader.h */,
@@ -80,6 +143,21 @@
 				501D68BA22C0FA1800216C2F /* AudioJack.h */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5034898722D793E7009F3C68 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5034899222D793E7009F3C68 /* libReact.a */,
+				5034899422D793E7009F3C68 /* libReact.a */,
+				5034899622D793E7009F3C68 /* libyoga.a */,
+				5034899822D793E7009F3C68 /* libyoga.a */,
+				5034899A22D793E7009F3C68 /* libcxxreact.a */,
+				5034899C22D793E7009F3C68 /* libcxxreact.a */,
+				5034899E22D793E7009F3C68 /* libjschelpers.a */,
+				503489A022D793E7009F3C68 /* libjschelpers.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		58B511D21A9E6C8500147676 = {
@@ -137,12 +215,77 @@
 			mainGroup = 58B511D21A9E6C8500147676;
 			productRefGroup = 58B511D21A9E6C8500147676;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 5034898722D793E7009F3C68 /* Products */;
+					ProjectRef = 5034898622D793E7009F3C68 /* React.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				58B511DA1A9E6C8500147676 /* RNAcr35 */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		5034899222D793E7009F3C68 /* libReact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReact.a;
+			remoteRef = 5034899122D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5034899422D793E7009F3C68 /* libReact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReact.a;
+			remoteRef = 5034899322D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5034899622D793E7009F3C68 /* libyoga.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyoga.a;
+			remoteRef = 5034899522D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5034899822D793E7009F3C68 /* libyoga.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyoga.a;
+			remoteRef = 5034899722D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5034899A22D793E7009F3C68 /* libcxxreact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcxxreact.a;
+			remoteRef = 5034899922D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5034899C22D793E7009F3C68 /* libcxxreact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcxxreact.a;
+			remoteRef = 5034899B22D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5034899E22D793E7009F3C68 /* libjschelpers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjschelpers.a;
+			remoteRef = 5034899D22D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		503489A022D793E7009F3C68 /* libjschelpers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libjschelpers.a;
+			remoteRef = 5034899F22D793E7009F3C68 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
