@@ -13,7 +13,7 @@
   "author": "Charles Killer @Foosballfan",
   "license": "MIT",
   "devDependencies": {
-    "react-native": "0.41.2"
+    "react-native": "0.70.4"
   },
   "peerDependencies": {
     "react-native": "^0.41.2"
